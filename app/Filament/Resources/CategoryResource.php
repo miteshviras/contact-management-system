@@ -34,6 +34,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -82,7 +83,7 @@ class CategoryResource extends Resource
                         TextInput::make('name')->maxLength(255)
                             ->required(),
                     ]),
-                 ])->from('md')
+                ])->from('md')
             ])];
     }
 }

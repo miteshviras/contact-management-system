@@ -36,19 +36,21 @@ class CompanyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('website')
-                    ->searchable(),
+                    ->searchable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('email')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -92,7 +94,6 @@ class CompanyResource extends Resource
             ->schema([
                 Split::make([
                     Section::make([
-
                         TextInput::make('name')
                             ->required()
                             ->maxLength(255),
@@ -111,9 +112,9 @@ class CompanyResource extends Resource
                     ]),
                     Section::make([
                         FileUpload::make('image')
-                        ->image(),
+                            ->image(),
                         TextInput::make('website')
-                        ->maxLength(255),
+                            ->maxLength(255),
                         DateTimePicker::make('created_at')->disabled(),
                         DateTimePicker::make('updated_at')->disabled(),
                     ])->grow(false),
