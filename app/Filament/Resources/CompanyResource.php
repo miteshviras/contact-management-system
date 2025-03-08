@@ -2,16 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CompanyResource\Pages;
-use App\Filament\Resources\CompanyResource\RelationManagers;
-use App\Models\Company;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Company;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Split;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\DateTimePicker;
+use App\Filament\Resources\CompanyResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CompanyResource\RelationManagers;
 
 class CompanyResource extends Resource
 {
@@ -22,26 +29,7 @@ class CompanyResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('website')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('address')
-                    ->required()
-                    ->columnSpanFull(),
-            ]);
+            ->schema(self::formSchema($form->getLivewire()->record));
     }
 
     public static function table(Table $table): Table
@@ -93,5 +81,43 @@ class CompanyResource extends Resource
             'create' => Pages\CreateCompany::route('/create'),
             'edit' => Pages\EditCompany::route('/{record}/edit'),
         ];
+    }
+
+    public static function formSchema(?Company $company = null)
+    {
+        $strLength = config('custom.string_length');
+        return [Grid::make([
+            'default' => 1,
+        ])
+            ->schema([
+                Split::make([
+                    Section::make([
+
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('phone')
+                            ->tel()
+                            ->required()
+                            ->maxLength(15),
+                        Textarea::make('address')
+                            ->required()
+                            ->rows(3)
+                            ->columnSpanFull(),
+                    ]),
+                    Section::make([
+                        FileUpload::make('image')
+                        ->image(),
+                        TextInput::make('website')
+                        ->maxLength(255),
+                        DateTimePicker::make('created_at')->disabled(),
+                        DateTimePicker::make('updated_at')->disabled(),
+                    ])->grow(false),
+                ])->from('md')
+            ])];
     }
 }
