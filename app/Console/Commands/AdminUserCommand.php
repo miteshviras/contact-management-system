@@ -65,7 +65,7 @@ class AdminUserCommand extends Command
 
     protected function createUser(): Authenticatable
     {
-        $attributes = $this->getUserData() + ['is_admin' => true, 'email_verified_at' => now()];
+        $attributes = $this->getUserData() + ['is_admin' => true, 'is_active' => true, 'email_verified_at' => now()];
         return static::getUserModel()::create($attributes);
     }
 
