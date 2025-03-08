@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Contact Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
 
-## About Laravel
+The Contact Management System is a web application designed to help users manage their contacts efficiently. It provides features to add, edit, delete, and search contacts, making it easy to keep track of personal and professional connections.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Add new contacts with details such as name, phone number, email, and address.
+- Edit existing contact information.
+- Delete contacts that are no longer needed.
+- Search for contacts by name or other details.
+- User authentication to secure access to contact information.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## System Requirements
 
-## Learning Laravel
+Before installing Filament, ensure your server meets the following requirements:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   PHP >= 8.3
+-   Composer
+-   Laravel >= 12.0
+-   Node.js & NPM (for frontend assets)
+-   A database (MySQL, PostgreSQL, SQLite, etc.)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+To get started with the Contact Management System, follow these steps:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/miteshviras/contact-management-system.git
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd contact-management-system
+    ```
+3. Install the dependencies:
+    ```bash
+    composer install
+    npm install
+    ```
+4. Set up the environment variables:
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+5. Configure the database in the `.env` file and run the migrations:
+    ```bash
+    php artisan migrate
+    ```
+6. Start the development server:
+    ```bash
+    php artisan serve
+    npm run dev
+    ```
+7. **Create Admin User**: execute below given command to create admin user.
 
-### Premium Partners
+```bash
+php artisan user:make-admin-user
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+8. **Create Storage Link**: Execute the command below to create a symbolic link from `public/storage` to `storage/app/public`.
+
+    ```bash
+    php artisan storage:link
+    ```
+
+## Usage
+
+Once the application is installed and running, you can access it in your web browser at `http://localhost:8000`. Register or log in to start managing your contacts.
+
+You can now access the Filament admin panel by navigating to `/admin` in your browser.
+
+## Building for Production
+
+To compile the frontend assets for production, use the following command:
+
+```bash
+npm run build
+```
+
+## Learning Filament
+
+Filament has comprehensive [documentation](https://filamentphp.com/docs) and a growing community of developers. You can also find tutorials and guides on various topics related to Filament and the TALL stack.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+We welcome contributions to the Contact Management System! If you would like to contribute, please fork the repository and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Contact
+
+If you have any questions or feedback, please feel free to reach out to the project maintainer at [virashmitesh@gmail.com](mailto:virashmitesh@gmail.com).
