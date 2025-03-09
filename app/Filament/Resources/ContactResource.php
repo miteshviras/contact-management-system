@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Company;
 use App\Models\Contact;
+use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
@@ -13,20 +15,21 @@ use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
+use Filament\Tables\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\ContactResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ContactResource\RelationManagers;
-use App\Models\Company;
 
 class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -52,6 +55,12 @@ class ContactResource extends Resource
                     ->label('Company')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('categories.name')
+                    ->label('Categories')
+                    ->default('-')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -65,7 +74,8 @@ class ContactResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -92,10 +102,9 @@ class ContactResource extends Resource
 
     public static function formSchema(?Contact $contact = null)
     {
-        $companyOptions = Company::latest()
-            ->limit(10)
-            ->pluck('name', 'id')
-            ->toArray();
+        $companyOptions = Company::latest()->limit(10)->pluck('name', 'id')->toArray();
+        $categoryOptions = Category::limit(10)->pluck('name', 'id')->toArray();
+
         return [Grid::make([
             'default' => 1,
         ])
@@ -130,6 +139,22 @@ class ContactResource extends Resource
                             ->getSearchResultsUsing(
                                 fn(string $search): array =>
                                 Company::where('name', 'like', "%{$search}%")
+                                    ->limit(10)
+                                    ->pluck('name', 'id')
+                                    ->toArray()
+                            )
+                            ->preload(),
+                        Select::make('categories')
+                            ->multiple()
+                            ->searchable()
+                            ->required()
+                            ->label('Categories')
+                            ->options($categoryOptions)
+                            ->relationship(titleAttribute: 'name')
+                            ->getSearchResultsUsing(
+                                fn(string $search): array =>
+                                Category::active()
+                                    ->where('name', 'like', "%{$search}%")
                                     ->limit(10)
                                     ->pluck('name', 'id')
                                     ->toArray()
