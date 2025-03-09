@@ -7,8 +7,8 @@ use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
 use App\Filament\Pages\Dashboard;
-use App\Filament\Widgets\StatsOverview;
 use Filament\Support\Colors\Color;
+use App\Filament\Widgets\StatsOverview;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -19,6 +19,8 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Filament\Resources\ContactResource\Widgets\LatestContacts;
+use App\Filament\Resources\CompanyResource\Widgets\LatestCompanies;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -40,6 +42,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 StatsOverview::class,
+                LatestContacts::class,
+                LatestCompanies::class
             ])
             ->middleware([
                 EncryptCookies::class,
