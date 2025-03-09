@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Company;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -29,5 +30,10 @@ class Contact extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'contact_categories');
     }
 }
