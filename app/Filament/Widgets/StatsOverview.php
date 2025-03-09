@@ -13,6 +13,7 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 class StatsOverview extends BaseWidget
 {
+    protected ?string $heading = 'Analytics';
     protected function getStats(): array
     {
         $date = Carbon::now()->subDays(7)->startOfDay();
@@ -46,7 +47,7 @@ class StatsOverview extends BaseWidget
             Stat::make('Categories', Category::count())
                 ->icon('heroicon-o-rectangle-stack')
                 ->chart($categoryLast7Days->pluck('count')->toArray())
-                ->description($categoryLast7Days->sum('count')." Increase in the last 7 days")
+                ->description($categoryLast7Days->sum('count') . " Increase in the last 7 days")
                 ->descriptionIcon('heroicon-m-arrow-trending-up', IconPosition::Before),
         ];
     }
