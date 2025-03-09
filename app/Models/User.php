@@ -37,8 +37,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'is_active' => 'boolean',
-        'is_admin' => 'boolean',
     ];
 
     /**
@@ -51,6 +49,8 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
+            'is_admin' => 'boolean',
         ];
     }
 
