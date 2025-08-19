@@ -18,7 +18,7 @@ class AdminUserCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'user:make-admin-user
+    protected $signature = 'user:create-admin
                             {--name= : The name of the user}
                             {--email= : A valid and unique email address}
                             {--password= : The password for the user (min. 8 characters)}';
@@ -28,7 +28,7 @@ class AdminUserCommand extends Command
      *
      * @var string
      */
-    protected $description = 'custom: make admin user';
+    protected $description = 'custom: create admin user';
 
     /**
      * @var array{'name': string | null, 'email': string | null, 'password': string | null}

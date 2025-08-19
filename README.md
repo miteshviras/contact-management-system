@@ -57,7 +57,7 @@ To get started with the Contact Management System, follow these steps:
 7. **Create Admin User**: execute below given command to create admin user.
 
     ```bash
-    php artisan user:make-admin-user
+    php artisan user:create-admin
     ```
 
 8. **Create Storage Link**: Execute the command below to create a symbolic link from `public/storage` to `storage/app/public`.
